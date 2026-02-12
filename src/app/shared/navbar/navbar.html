@@ -1,0 +1,30 @@
+<nav class="relative bg-white shadow dark:bg-gray-900">
+    <div class="container px-6 py-4 mx-auto lg:flex lg:items-center lg:justify-between">
+        <div class="flex items-center justify-between">
+            <a href="/">
+                <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="Logo">
+            </a>
+
+            <div class="flex lg:hidden">
+                <button (click)="toggleMenu()" type="button" class="text-gray-500 dark:text-gray-200 hover:text-gray-600 focus:outline-none">
+                    <svg [class.hidden]="isOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                    </svg>
+                    <svg [class.hidden]="!isOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div [class.translate-x-0]="isOpen" [class.opacity-100]="isOpen"
+             [class.-translate-x-full]="!isOpen" [class.opacity-0]="!isOpen"
+             class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center">
+            <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
+                <a href="/" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Inicio</a>
+                <a href="/catalogo" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Catálogo</a>
+                <a href="/gestion" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Gestión</a>
+            </div>
+        </div>
+    </div>
+</nav>
