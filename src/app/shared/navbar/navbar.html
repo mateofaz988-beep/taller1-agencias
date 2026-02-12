@@ -1,7 +1,7 @@
 <nav class="relative bg-white shadow dark:bg-gray-900">
     <div class="container px-6 py-4 mx-auto lg:flex lg:items-center lg:justify-between">
         <div class="flex items-center justify-between">
-            <a href="/">
+            <a routerLink="/">
                 <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="Logo">
             </a>
 
@@ -20,15 +20,24 @@
         <div [class.translate-x-0]="isOpen" [class.opacity-100]="isOpen"
              [class.-translate-x-full]="!isOpen" [class.opacity-0]="!isOpen"
              class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center">
+            
             <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-                <a href="/" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Inicio</a>
-                <a href="/catalogo" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Catálogo</a>
-                <a href="/gestion" class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Gestión</a>
-                 <li>
-                        <a routerLink="/usuarios"
-                            class="block py-2 px-3 text-slate-600 rounded hover:bg-slate-100 md:hover:bg-transparent md:hover:text-emerald-400 md:p-0 transition-all duration-300">Usuarios</a>
-                    </li>
+                <a routerLink="/" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   [routerLinkActiveOptions]="{exact: true}"
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Inicio</a>
+                
+                <a routerLink="/catalogo" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Catálogo</a>
+                
+                <a routerLink="/gestion" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Gestión</a>
 
+                <a routerLink="/usuarios" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Usuarios</a>
             </div>
         </div>
     </div>
