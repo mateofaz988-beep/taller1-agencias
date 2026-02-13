@@ -4,10 +4,12 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
 import { CatalogoComponent } from './pages/catalogo/catalogo';
 import { GestionComponent } from './pages/gestion/gestion';
+import { NosotrosComponent } from './pages/nosotros/nosotros';
+import { ContactanosComponent } from './pages/contactanos/contactanos'; // <--- Nueva importación
 
-// Importaciones de Andy integradas
+// Importaciones de compartidos y otros
 import { Formulario } from './shared/formulario/formulario';
-import { Usuarios } from './pages/usuarios/usuarios';
+
 
 export const routes: Routes = [
   { 
@@ -26,17 +28,23 @@ export const routes: Routes = [
     title: 'Gestión - Administrar Viajes' 
   },
   { 
+    path: 'nosotros',
+    component: NosotrosComponent, 
+    title: 'Sobre Nosotros - Agencia de Viajes' 
+  },
+  { 
+    path: 'contactanos', // <--- Nueva ruta añadida
+    component: ContactanosComponent, 
+    title: 'Contacto - Agencia AIR593' 
+  },
+  { 
     path: 'formulario', 
     component: Formulario,
     title: 'Formulario de Registro'
   },
-  { 
-    path: 'usuarios', 
-    component: Usuarios,
-    title: 'Administración de Usuarios'
-  },
   
-  // Redirige cualquier ruta no encontrada al Inicio
+  
+  // Redirige cualquier ruta no encontrada al Inicio (siempre debe ir al final)
   { 
     path: '**', 
     redirectTo: '' 

@@ -1,8 +1,15 @@
 <nav class="relative bg-white shadow dark:bg-gray-900">
     <div class="container px-6 py-4 mx-auto lg:flex lg:items-center lg:justify-between">
         <div class="flex items-center justify-between">
-            <a routerLink="/">
-                <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="Logo">
+            <a routerLink="/" class="flex items-center gap-2 no-underline">
+                <div class="bg-blue-600 p-1.5 rounded-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </div>
+                <span class="text-2xl font-black tracking-tighter text-gray-800 dark:text-white uppercase italic">
+                    AIR <span class="text-blue-600">593</span>
+                </span>
             </a>
 
             <div class="flex lg:hidden">
@@ -35,9 +42,13 @@
                    routerLinkActive="text-blue-500 font-bold" 
                    class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Gestión</a>
 
-                <a routerLink="/usuarios" 
+                <a routerLink="/nosotros" 
                    routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Usuarios</a>
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Nosotros</a>
+
+                <a routerLink="/contactanos" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Contáctanos</a>
             </div>
         </div>
     </div>

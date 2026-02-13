@@ -1,37 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Viaje } from '../../models/viaje/viaje';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ViajeService, Viaje } from '../../services/viaje';
 
 @Component({
   selector: 'app-gestion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './gestion.html'
 })
-export class GestionComponent {
+export class GestionComponent implements OnInit {
 
-  inventario: Viaje[] = [
-    { id: 1, nombre: 'Galápagos', categoria: 'Playa', precio: 1200,  oferta: true },
-    { id: 2, nombre: 'Cotopaxi', categoria: 'Montaña', precio: 80,  oferta: false },
-    { id: 3, nombre: 'Baños', categoria: 'Aventura', precio: 100, oferta: true },
-  ];
+  private _viajeService = inject(ViajeService);
+  private fb = inject(FormBuilder);
 
   carrito: Viaje[] = [];
   total: number = 0;
   verPago: boolean = false;
+  formPago: FormGroup;
 
-  
-  seleccionar(viaje: Viaje): void {
-    
-    this.carrito = [...this.carrito, viaje];
-    
+  constructor() {
+    this.formPago = this.fb.group({
+      titular: ['', [Validators.required, Validators.minLength(3)]],
+      tarjeta: ['', [Validators.required, Validators.pattern(/^[0-9]{16}$/)]],
+      fecha: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
+      cvv: ['', [Validators.required, Validators.pattern(/^[0-9]{3}$/)]]
+    });
+  }
 
-    this.total = this.total + viaje.precio;
+  ngOnInit(): void {
+    const reservasDelServicio = this._viajeService.obtenerReservas();
+    this.carrito = [...this.carrito, ...reservasDelServicio];
+    this.calcularTotal();
+  }
+
+  validarSoloNumeros(event: any): void {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    const controlName = input.getAttribute('formControlName');
+    this.formPago.get(controlName)?.setValue(input.value);
+  }
+
+  formatearFecha(event: any): void {
+    const input = event.target;
+    let valor = input.value.replace(/\D/g, '');
+    if (valor.length > 2) {
+      valor = valor.substring(0, 2) + '/' + valor.substring(2, 4);
+    }
+    input.value = valor;
+    this.formPago.get('fecha')?.setValue(valor);
+  }
+
+  calcularTotal(): void {
+    this.total = this.carrito.reduce((suma, viaje) => suma + viaje.precio, 0);
+  }
+
+  eliminar(index: number): void {
+    this.carrito = this.carrito.filter((_, i) => i !== index);
+    this.calcularTotal();
   }
 
   abrirCaja(): void {
     if (this.total > 0) {
       this.verPago = true;
+      this.formPago.reset();
     }
   }
 
@@ -39,10 +71,36 @@ export class GestionComponent {
     this.verPago = false;
   }
 
+  // MÉTODO ACTUALIZADO PARA MOCKAPI
   pagarTodo(): void {
-    alert('Pago exitoso de: $' + this.total);
-    this.carrito = []; 
-    this.total = 0;    
-    this.cerrarCaja();
+    if (this.formPago.valid) {
+      
+      // 1. Preparamos el objeto con los datos de la venta
+      const datosVenta = {
+        titular: this.formPago.value.titular,
+        total: this.total,
+        fecha: new Date().toLocaleString(), // Fecha y hora actual
+        items: this.carrito.map(v => v.destino).join(', ') // Nombres de los destinos
+      };
+
+      // 2. Llamamos al servicio para guardar en MockAPI
+      this._viajeService.guardarVenta(datosVenta).subscribe({
+        next: (respuesta) => {
+          // Si la API responde con éxito
+          console.log('Venta guardada:', respuesta);
+          alert('¡Pago exitoso! La reserva se ha guardado en la nube.');
+          
+          // Limpiamos la interfaz
+          this.carrito = []; 
+          this.total = 0;    
+          this.cerrarCaja();
+        },
+        error: (err) => {
+          // Si hay un error (ej. URL mal puesta o sin internet)
+          console.error('Error al guardar:', err);
+          alert('Hubo un problema al registrar la venta en el servidor.');
+        }
+      });
+    }
   }
 }
