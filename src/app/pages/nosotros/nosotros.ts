@@ -7,7 +7,7 @@ import { HeroComponent } from '../../shared/hero/hero';
 @Component({
   selector: 'app-nosotros',
   standalone: true,
-  // 2. AGREGALO AQUÍ (Mantén también el RouterModule)
+
   imports: [CommonModule, RouterModule, HeroComponent], 
   templateUrl: './nosotros.html',
   styles: []

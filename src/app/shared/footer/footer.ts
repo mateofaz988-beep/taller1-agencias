@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.css']
 })
 export class FooterComponent {
-  // Aquí podrías inyectar un servicio para obtener datos de contacto dinámicos
+
 }

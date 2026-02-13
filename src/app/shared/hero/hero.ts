@@ -1,4 +1,4 @@
-// CAMBIA '@angular/common' POR '@angular/core' en la línea 1
+
 import { Component, Input } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

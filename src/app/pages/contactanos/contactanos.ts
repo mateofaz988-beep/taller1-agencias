@@ -10,7 +10,7 @@ import { HeroComponent } from '../../shared/hero/hero';
   templateUrl: './contactanos.html'
 })
 export class ContactanosComponent {
-  // Datos del formulario
+
   contacto = {
     nombre: '',
     email: '',
@@ -23,7 +23,7 @@ export class ContactanosComponent {
   enviarFormulario() {
     this.enviando = true;
     
-    // Simulamos envío a Firebase o API
+
     setTimeout(() => {
       console.log('Datos enviados:', this.contacto);
       alert('¡Gracias! Tu mensaje ha sido enviado. Un asesor de AIR593 te contactará pronto.');

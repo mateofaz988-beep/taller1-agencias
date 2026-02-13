@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario/usuario';
 })
 export class Formulario {
   private servicioUsuario = inject(UsuarioServicio);
-  //lista reactiva para almacenar los usuarios, signal es una función que cre uan señal reactiva que se puede actualizar y suscribirse a cambios 
+ 
   listaUsuarios = signal<Usuario[]>([]);
 
   editando = false;
@@ -22,18 +22,17 @@ export class Formulario {
     email: '',
     phone: '',
   };
-  //Metodo para agregar u nuevo usuario a la lista
+
   ngOnInit() {
     this.obtenerUsuarios();
   }
-  //metodo obtener usuarios para que se muestren al cargar la pagina
+
   obtenerUsuarios() {
     this.servicioUsuario.getUsuarios().subscribe(usuarios => {
       this.listaUsuarios.set(usuarios);
     })
   }
 
-  //metodo para guardar los cambios realizados en la edicion
   guardarUsuario() {
     if (this.editando && this.nuevoUsuario.id) {
       this.servicioUsuario.putUsuario(this.nuevoUsuario.id, this.nuevoUsuario).subscribe(() => {
