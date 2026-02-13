@@ -1,20 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+// Cambia 'Gestion' por 'GestionComponent'
+import { GestionComponent } from './gestion'; 
 
-import { Gestion } from './gestion';
-
-describe('Gestion', () => {
-  let component: Gestion;
-  let fixture: ComponentFixture<Gestion>;
+describe('GestionComponent', () => {
+  let component: GestionComponent;
+  let fixture: ComponentFixture<GestionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Gestion]
+     
+      imports: [GestionComponent] 
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Gestion);
+    fixture = TestBed.createComponent(GestionComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
