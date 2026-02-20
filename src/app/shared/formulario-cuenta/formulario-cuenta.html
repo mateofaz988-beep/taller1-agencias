@@ -9,7 +9,7 @@
         @if(formCuenta.get('email')?.errors?.['required']){
           El email es obligatorio
         }
-        @if(formCuenta.get('email')?.errors?.['pattern']){
+        @if(formCuenta.get('email')?.errors?.['email']){
           No cumple el formato de email
         }
       </p>
@@ -50,7 +50,6 @@
 
   <button 
     type="submit"
-    [disabled]="formCuenta.invalid"
     class="bg-blue-600 text-white px-5 py-2 rounded-lg">
     Enviar 
   </button>

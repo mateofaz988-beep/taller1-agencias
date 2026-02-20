@@ -8,7 +8,7 @@ import { NosotrosComponent } from './pages/nosotros/nosotros';
 import { ContactanosComponent } from './pages/contactanos/contactanos'; // <--- Nueva importación
 
 // Importaciones de compartidos y otros
-import { Formulario } from './shared/formulario/formulario';
+
 import { Login } from './shared/login/login';
 import { FormularioCuenta } from './shared/formulario-cuenta/formulario-cuenta';
 
@@ -38,11 +38,6 @@ export const routes: Routes = [
     path: 'contactanos', // <--- Nueva ruta añadida
     component: ContactanosComponent, 
     title: 'Contacto - Agencia AIR593' 
-  },
-  { 
-    path: 'formulario', 
-    component: Formulario,
-    title: 'Formulario de Registro'
   },
 
    { path: 'login', component: Login, 
