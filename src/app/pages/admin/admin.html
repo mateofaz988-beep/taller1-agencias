@@ -1,0 +1,17 @@
+<div class="admin-container">
+  <h1>Panel de Administración</h1>
+
+  <p>Bienvenido: {{ usuario?.email }}</p>
+  <p>Rol: {{ usuario?.rol }}</p>
+
+  <hr>
+
+  <h3>Opciones del administrador</h3>
+
+  <button routerLink="/usuarios">Gestionar Usuarios</button>
+  <button routerLink="/catalogo">Ver Catálogo</button>
+
+  <br><br>
+
+  <button (click)="cerrarSesion()">Cerrar Sesión</button>
+</div>

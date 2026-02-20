@@ -5,33 +5,43 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  //importar esto
   imports: [FormsModule],
+   standalone: true,
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
 
+  email: string = '';
+  password: string = '';
 
-  email:string='';
-  password:string='';
-
-  private servicioAuth =inject(AuthService);
-
+  private servicioAuth = inject(AuthService);
   private router = inject(Router);
-  iniciarsecion(){
-    this.servicioAuth.login(this.email,this.password).subscribe(succes =>{
-      if(succes){
-           alert('Bienvenidos al sistema');
-        this.router.navigate(['/usuarios']);
-      }else{
-        alert('Error:usuario no autenticado');
+
+  iniciarsecion() {
+    this.servicioAuth.login(this.email, this.password).subscribe(success => {
+
+      if (success) {
+
+        alert('Bienvenidos al sistema');
+
+        const usuario = this.servicioAuth.getUsuarioActual();
+
+        // 🔥 Redirección según rol
+        if (usuario?.rol === 'ADMIN') {
+          this.router.navigateByUrl('/admin');
+        } else {
+          this.router.navigate(['/usuarios']);
+        }
+
+      } else {
+        alert('Error: usuario no autenticado');
       }
+
     });
- 
   }
 
-  cerrarsesion(){
+  cerrarsesion() {
     this.servicioAuth.logout();
   }
 }

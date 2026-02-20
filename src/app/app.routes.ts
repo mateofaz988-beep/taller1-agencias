@@ -10,15 +10,18 @@ import { Login } from './shared/login/login';
 import { FormularioCuenta } from './shared/formulario-cuenta/formulario-cuenta';
 import { clienteSoloLoginGuard } from './guards/cliente-solo-login-guard-guard';
 import { sesionActivaGuard } from './guards/sesion-activa-guard-guard';
+import { Admin } from './pages/admin/admin';
+import { adminGuard } from './guards/admin-guard-guard';
 
 export const routes: Routes = [
 
   { path: '', component: HomeComponent },
 
-  { path: 'catalogo', component: CatalogoComponent},
-
+  { path: 'catalogo', component: CatalogoComponent, 
+    canMatch: [adminGuard] },
   { path: 'gestion', component: GestionComponent,
-    canActivate: [sesionActivaGuard]
+    canActivate: [sesionActivaGuard],
+   
    },
 
   { path: 'nosotros', component: NosotrosComponent },
@@ -30,9 +33,15 @@ export const routes: Routes = [
     component: Login,
     canActivate: [clienteSoloLoginGuard]
   },
+  { 
+  path: 'admin', 
+  component: Admin
+},
+  
 
   { path: 'formulariocuenta', component: FormularioCuenta },
+  
 
-  { path: '**', redirectTo: '' }
+  
 
 ];

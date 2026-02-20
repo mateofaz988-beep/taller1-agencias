@@ -72,5 +72,12 @@ export class AuthService {
   getUsuarioActual() {
   return JSON.parse(localStorage.getItem('usuario') || 'null');
 }
+esAdmin(): boolean {
+    return this.rolActual() === 'admin';
+  }
 
+  
+  estaAutenticado(): boolean {
+    return this.sesioniniciada();
+  }
 }
