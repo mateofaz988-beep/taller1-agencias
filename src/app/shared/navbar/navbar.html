@@ -24,37 +24,58 @@
             </div>
         </div>
 
-        <div [class.translate-x-0]="isOpen" [class.opacity-100]="isOpen"
-             [class.-translate-x-full]="!isOpen" [class.opacity-0]="!isOpen"
-             class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center">
-            
-            <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
+        <div [class.hidden]="!isOpen" class="lg:flex lg:items-center">
+            <div class="flex flex-col lg:flex-row">
                 <a routerLink="/" 
                    routerLinkActive="text-blue-500 font-bold" 
                    [routerLinkActiveOptions]="{exact: true}"
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Inicio</a>
+                   class="px-3 py-2">Inicio</a>
                 
                 <a routerLink="/catalogo" 
                    routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Catálogo</a>
+                   class="px-3 py-2">Catálogo</a>
                 
+                <!-- ✅ SOLO VISIBLE SI HAY SESIÓN -->
                 <a routerLink="/gestion" 
+                   *ngIf="authService.sesioniniciada()"
                    routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Gestión</a>
+                   class="px-3 py-2">Gestión</a>
+
+                <!-- ✅ SOLO VISIBLE PARA ADMIN -->
+                <a routerLink="/panel-admin" 
+                   *ngIf="authService.rolActual() === 'admin'" 
+                   routerLinkActive="text-blue-500 font-bold" 
+                   class="px-3 py-2 text-red-600 font-bold">
+                   📊 Panel Admin
+                </a>
 
                 <a routerLink="/nosotros" 
                    routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Nosotros</a>
+                   class="px-3 py-2">Nosotros</a>
 
                 <a routerLink="/contactanos" 
                    routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Contáctanos</a>
-                   <a routerLink="/formulariocuenta" 
-                   routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Crear Cuenta</a>
-                   <a routerLink="/login" 
-                   routerLinkActive="text-blue-500 font-bold" 
-                   class="px-3 py-2 mx-3 mt-2 text-gray-700 dark:text-gray-200 hover:text-blue-500 lg:mt-0">Iniciar Sesión</a>
+                   class="px-3 py-2">Contáctanos</a>
+            </div>
+
+            <!-- ✅ BOTONES DE AUTENTICACIÓN -->
+            <div class="flex flex-col lg:flex-row">
+                <ng-container *ngIf="authService.sesioniniciada(); else loginBlock">
+                    <!-- ✅ USUARIO LOGUEADO - MOSTRAR CERRAR SESIÓN -->
+                    <button (click)="authService.logout()" 
+                            class="px-3 py-2 text-red-600 hover:text-red-700 font-medium">
+                        Cerrar Sesión
+                    </button>
+                </ng-container>
+                <ng-template #loginBlock>
+                    <!-- ✅ USUARIO NO LOGUEADO - MOSTRAR LOGIN -->
+                    <a routerLink="/formulariocuenta" 
+                       routerLinkActive="text-blue-500 font-bold" 
+                       class="px-3 py-2">Crear Cuenta</a>
+                    <a routerLink="/login" 
+                       routerLinkActive="text-blue-500 font-bold" 
+                       class="px-3 py-2">Iniciar Sesión</a>
+                </ng-template>
             </div>
         </div>
     </div>

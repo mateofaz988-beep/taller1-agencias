@@ -1,17 +1,227 @@
-<div class="admin-container">
-  <h1>Panel de Administración</h1>
 
-  <p>Bienvenido: {{ usuario?.email }}</p>
-  <p>Rol: {{ usuario?.rol }}</p>
+<style>
+  /* Variables de color inspiradas en aerolíneas corporativas */
+  :root {
+    --aviation-blue: #003366;    /* Azul marino oscuro */
+    --sky-blue: #00AEEF;         /* Azul brillante */
+    --alert-red: #D32F2F;        /* Rojo para acciones críticas */
+    --bg-gray: #F4F7F6;          /* Fondo suave */
+    --text-dark: #333333;
+  }
 
-  <hr>
+  /* Contenedor wrapper para el fondo (en lugar de body para no afectar toda la app) */
+  .admin-wrapper {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-gray);
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-  <h3>Opciones del administrador</h3>
+  /* Contenedor Principal */
+  .admin-container {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 51, 102, 0.15);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
 
-  <button routerLink="/usuarios">Gestionar Usuarios</button>
-  <button routerLink="/catalogo">Ver Catálogo</button>
+  /* Barra decorativa superior */
+  .header-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--aviation-blue), var(--sky-blue));
+  }
 
-  <br><br>
+  /* Tipografía */
+  .admin-container h1 {
+    color: var(--aviation-blue);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    font-weight: 700;
+  }
 
-  <button (click)="cerrarSesion()">Cerrar Sesión</button>
+  .admin-container h3 {
+    color: #666;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2rem;
+  }
+
+  .admin-container hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 1.5rem 0;
+  }
+
+  .admin-container p {
+    margin: 5px 0;
+  }
+
+  /* Tarjeta de Usuario */
+  .user-info-card {
+    background: #f0f8ff;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .user-avatar {
+    font-size: 2rem;
+    color: var(--aviation-blue);
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+
+  .user-details {
+    flex-grow: 1;
+  }
+
+  .welcome-text {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+
+  .role-badge {
+    display: inline-block;
+    background: var(--aviation-blue);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  /* Grid de Botones */
+  .button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 2rem;
+  }
+
+  /* Estilos Generales de Botones */
+  .btn {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    text-decoration: none; /* Para routerLink */
+  }
+
+  /* Botón Primario (Azul Aerolínea) */
+  .btn-primary {
+    background-color: var(--aviation-blue);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 51, 102, 0.2);
+  }
+
+  .btn-primary:hover {
+    background-color: #002244;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3);
+  }
+
+  /* Botón Peligro (Cerrar Sesión) */
+  .btn-danger {
+    background-color: transparent;
+    color: var(--alert-red);
+    border: 1px solid var(--alert-red);
+    width: auto;
+    padding: 8px 20px;
+  }
+
+  .btn-danger:hover {
+    background-color: var(--alert-red);
+    color: white;
+  }
+
+  .actions-footer {
+    margin-top: 1rem;
+  }
+
+  /* Iconos (si no carga FontAwesome, esto evita errores) */
+  i {
+    pointer-events: none;
+  }
+</style>
+
+<!-- Enlace a iconos (FontAwesome) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Estructura HTML -->
+<div class="admin-wrapper">
+  <div class="admin-container">
+    <div class="header-strip"></div>
+    
+    <h1><i class="fa-solid fa-plane-departure"></i> Panel de Administración</h1>
+  
+    <div class="user-info-card">
+      <div class="user-avatar">
+        <i class="fa-solid fa-user-pilot"></i>
+      </div>
+      <div class="user-details">
+        <p class="welcome-text">Bienvenido, <strong>{{ usuario?.email }}</strong></p>
+        <span class="role-badge">{{ usuario?.rol }}</span>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <h3>Operaciones de Vuelo</h3>
+  
+    <div class="button-grid">
+      <button routerLink="/usuarios" class="btn btn-primary">
+        <i class="fa-solid fa-users"></i> Gestionar Usuarios
+      </button>
+      <button routerLink="/catalogo" class="btn btn-primary">
+        <i class="fa-solid fa-list-check"></i> Ver Catálogo
+      </button>
+    </div>
+  
+    <div class="actions-footer">
+      <button (click)="cerrarSesion()" class="btn btn-danger">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+      </button>
+    </div>
+  </div>
 </div>
+```
