@@ -9,7 +9,7 @@ import { Usuario } from '../../models/usuario/usuario';
 })
 export class UsuarioServicio {
   private http = inject(HttpClient);
-  private API_URL = 'https://evaluacion-dos-86884-default-rtdb.firebaseio.com/';
+  private API_URL = 'https://productos-1f199-default-rtdb.firebaseio.com/';
 
   getUsuarios(): Observable<Usuario[]>{
     return this.http.get<{[key:string]:Usuario}>(`${this.API_URL}/usuarios.json`).pipe(

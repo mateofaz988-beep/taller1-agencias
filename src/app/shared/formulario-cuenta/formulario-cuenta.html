@@ -1,0 +1,64 @@
+<form [formGroup]="formCuenta" (ngSubmit)="registrar()" class="max-w-sm mx-auto">
+
+  <div class="mb-5">
+    <label class="block mb-2 text-sm font-medium">Your email</label>
+    <input formControlName="email" type="email" class="block w-full p-2.5 border rounded-lg" />
+
+    @if(formCuenta.get('email')?.invalid && formCuenta.get('email')?.touched){
+      <p class="text-red-600 text-sm mt-2">
+        @if(formCuenta.get('email')?.errors?.['required']){
+          El email es obligatorio
+        }
+        @if(formCuenta.get('email')?.errors?.['pattern']){
+          No cumple el formato de email
+        }
+      </p>
+    }
+  </div>
+
+  <div class="mb-5">
+    <label class="block mb-2 text-sm font-medium">Password</label>
+    <input formControlName="password" type="password" class="block w-full p-2.5 border rounded-lg" />
+
+    @if(formCuenta.get('password')?.invalid && formCuenta.get('password')?.touched){
+      <p class="text-red-600 text-sm mt-2">
+        @if(formCuenta.get('password')?.errors?.['required']){
+          La contraseña es obligatoria
+        }
+        @if(formCuenta.get('password')?.errors?.['pattern']){
+          Debe tener al menos 8 caracteres, una letra y un número
+        }
+      </p>
+    }
+  </div>
+
+  <div class="mb-5">
+    <label class="block mb-2 text-sm font-medium">Repeat Password</label>
+    <input formControlName="repeatPassword" type="password" class="block w-full p-2.5 border rounded-lg" />
+
+    @if(formCuenta.get('repeatPassword')?.touched){
+      <p class="text-red-600 text-sm mt-2">
+        @if(formCuenta.get('repeatPassword')?.errors?.['required']){
+          Debe repetir la contraseña
+        }
+        @if(formCuenta.errors?.['noCoinciden']){
+          Las contraseñas no coinciden
+        }
+      </p>
+    }
+  </div>
+
+  <button 
+    type="submit"
+    [disabled]="formCuenta.invalid"
+    class="bg-blue-600 text-white px-5 py-2 rounded-lg">
+    Enviar 
+  </button>
+
+</form>
+
+@if(registroExitoso){
+  <p class="text-green-600 mt-4 text-center">
+    Registro exitoso
+  </p>
+}

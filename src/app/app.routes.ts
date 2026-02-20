@@ -9,6 +9,8 @@ import { ContactanosComponent } from './pages/contactanos/contactanos'; // <--- 
 
 // Importaciones de compartidos y otros
 import { Formulario } from './shared/formulario/formulario';
+import { Login } from './shared/login/login';
+import { FormularioCuenta } from './shared/formulario-cuenta/formulario-cuenta';
 
 
 export const routes: Routes = [
@@ -42,6 +44,13 @@ export const routes: Routes = [
     component: Formulario,
     title: 'Formulario de Registro'
   },
+
+   { path: 'login', component: Login, 
+    title: 'Iniciar Sesión'
+   },
+    { path: 'formulariocuenta', component: FormularioCuenta, 
+    title: 'Crear Cuenta'
+   },
   
   
   // Redirige cualquier ruta no encontrada al Inicio (siempre debe ir al final)
