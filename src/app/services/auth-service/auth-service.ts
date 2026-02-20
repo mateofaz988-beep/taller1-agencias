@@ -67,5 +67,10 @@ export class AuthService {
     this.rolActual.set(null);
     this.sesioniniciada.set(false);
   }
+  //rolesxd implementacion de guardianes
+
+  getUsuarioActual() {
+  return JSON.parse(localStorage.getItem('usuario') || 'null');
+}
 
 }
